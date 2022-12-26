@@ -13,13 +13,13 @@
   "author": "Amos Ayomide (amosayomide05)",
   "license": "MIT",
   "dependencies": {
+    "chatgpt": "latest",
+    "dotenv": "^16.0.3",
     "puppeteer": "latest",
     "qrcode-terminal": "latest",
-    "whatsapp-web.js": "latest",
-    "chatgpt": "latest"
+    "whatsapp-web.js": "latest"
   },
   "homepage": "https://github.com/amosayomide05/chatgpt-whatsapp-bot",
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amosayomide05/chatgpt-whatsapp-bot.git"

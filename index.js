@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const qrcode = require("qrcode-terminal");
 const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 
@@ -20,21 +22,12 @@ client.on("ready", () => {
   console.log("Bot is ready!");
 });
 
-
 (async () => {
-  // const { ChatGPTAPI, getOpenAIAuth } = await import('chatgpt');
-  // const openAIAuth = await getOpenAIAuth({
-  //       email: process.env.OPENAI_EMAIL,
-  //       password: process.env.OPENAI_PASSWORD 
-  // });
-  // const api = new ChatGPTAPI({ ...openAIAuth });
-
-  const { ChatGPTAPIBrowser, getOpenAIAuth } = await import('chatgpt');
-  const openAIAuth = await getOpenAIAuth({
-        email: process.env.OPENAI_EMAIL,
-        password: process.env.OPENAI_PASSWORD 
+  const { ChatGPTAPIBrowser } = await import('chatgpt');
+  const api = new ChatGPTAPIBrowser({ 
+    email: process.env.OPENAI_EMAIL,
+    password: process.env.OPENAI_PASSWORD
   });
-  const api = new ChatGPTAPIBrowser({ ...openAIAuth });
 
   try{
     await api.initSession();
@@ -42,16 +35,16 @@ client.on("ready", () => {
   catch(error){
     console.error("ChatGPT Auth Failed: " + error.message);
   }
+
+  const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+
+  client.on("message", (message) => {
+
+    (async () => {
+      var response = await api.sendMessage(message);
+      await sleep(5000);
+      message.reply(response);
+    })();
+
+  });
 })();
-
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
-
-client.on("message", (message) => {
-
-  (async () => {
-    var response = await api.sendMessage(message);
-    await sleep(5000);
-    message.reply(response);
-  })();
-
-});
