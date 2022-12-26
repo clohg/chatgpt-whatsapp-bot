@@ -22,20 +22,26 @@ client.on("ready", () => {
 
 
 (async () => {
-  const { ChatGPTAPI, getOpenAIAuth } = await import('chatgpt');
-const openAIAuth = await getOpenAIAuth({
-      email: process.env.OPENAI_EMAIL,
-      password: process.env.OPENAI_PASSWORD 
-});
-const api = new ChatGPTAPI({ ...openAIAuth });
+  // const { ChatGPTAPI, getOpenAIAuth } = await import('chatgpt');
+  // const openAIAuth = await getOpenAIAuth({
+  //       email: process.env.OPENAI_EMAIL,
+  //       password: process.env.OPENAI_PASSWORD 
+  // });
+  // const api = new ChatGPTAPI({ ...openAIAuth });
 
+  const { ChatGPTAPIBrowser, getOpenAIAuth } = await import('chatgpt');
+  const openAIAuth = await getOpenAIAuth({
+        email: process.env.OPENAI_EMAIL,
+        password: process.env.OPENAI_PASSWORD 
+  });
+  const api = new ChatGPTAPIBrowser({ ...openAIAuth });
 
-try{
-      await api.initSession();
-    }
-    catch(error){
-      console.error("ChatGPT Auth Failed: " + error.message);
-    }
+  try{
+    await api.initSession();
+  }
+  catch(error){
+    console.error("ChatGPT Auth Failed: " + error.message);
+  }
 })();
 
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
