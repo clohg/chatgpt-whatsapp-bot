@@ -6,7 +6,7 @@
 
 1. Create a `.env` file,
 
-2. Add ChatGPT token to `CHATGPT_TOKEN` ([How to get ChatGPT token](https://github.com/transitive-bullshit/chatgpt-api#session-tokens))
+2. Add OpenAI account email and password to `OPENAI_EMAIL` and `OPENAI_PASSWORD` ([How to get ChatGPT token](https://github.com/transitive-bullshit/chatgpt-api#session-tokens))
 
 3. Read this on how to properly run the code with whatsapp qr ([How to Run Whatsapp Bot](https://wwebjs.dev/guide/#qr-code-generation))
 
