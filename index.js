@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const qrcode = require("qrcode-terminal");
-const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
+const { Client, LocalAuth } = require("whatsapp-web.js");
 
 const client = new Client({
   puppeteer: {
@@ -14,6 +14,7 @@ const client = new Client({
 client.initialize();
 client.on("qr", (qr) => {
   qrcode.generate(qr, { small: true });
+  console.log("QR code ready!");
 });
 client.on("authenticated", () => {
   console.log("Auth Completed!");
@@ -21,6 +22,7 @@ client.on("authenticated", () => {
 client.on("ready", () => {
   console.log("Bot is ready!");
 });
+
 
 (async () => {
   const { ChatGPTAPIBrowser } = await import('chatgpt');
@@ -35,16 +37,16 @@ client.on("ready", () => {
   catch(error){
     console.error("ChatGPT Auth Failed: " + error.message);
   }
-
-  const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
-
-  client.on("message", (message) => {
-
-    (async () => {
-      var response = await api.sendMessage(message);
-      await sleep(5000);
-      message.reply(response);
-    })();
-
-  });
 })();
+
+const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+
+client.on("message", (message) => {
+
+  (async () => {
+    var response = await api.sendMessage(message);
+    await sleep(5000);
+    message.reply(response);
+  })();
+
+});
